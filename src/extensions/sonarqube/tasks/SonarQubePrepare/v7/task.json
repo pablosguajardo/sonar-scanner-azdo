@@ -24,11 +24,42 @@
   ],
   "inputs": [
     {
+      "name": "SonarQubeServerConnectionType",
+      "type": "pickList",
+      "label": "SonarQube Server connection type",
+      "required": true,
+      "helpMarkDown": "Select the type of SonarQube Server connection type.",
+      "options": {
+        "serverendpoint": "SonarQube Server endpoint",
+        "urltoken": "Url + Token"
+      },
+      "defaultValue": "serverendpoint"
+    },
+    {
       "name": "SonarQube",
       "type": "connectedService:sonarqube",
       "label": "SonarQube Server Endpoint",
       "required": true,
-      "helpMarkDown": "Select the SonarQube server endpoint for your project. To create one, click the Manage link and create a new SonarQube Server Endpoint, enter your server url and token."
+      "helpMarkDown": "Select the SonarQube server endpoint for your project. To create one, click the Manage link and create a new SonarQube Server Endpoint, enter your server url and token.",
+      "visibleRule": "SonarQubeServerConnectionType = serverendpoint"
+    },
+    {
+      "defaultValue": "$(SonarQubeServerUrl)",
+      "helpMarkDown": "Specify the SonarQube server url",
+      "label": "Sonar Qube Server url",
+      "name": "SonarQubeServerUrl",
+      "required": true,
+      "type": "string",
+      "visibleRule": "SonarQubeServerConnectionType = urltoken"
+    },
+    {
+      "defaultValue": "$(SonarQubeServerToken)",
+      "helpMarkDown": "Specify the SonarQube server token",
+      "label": "Sonar Qube Server token",
+      "name": "SonarQubeServerToken",
+      "required": true,
+      "type": "string",
+      "visibleRule": "SonarQubeServerConnectionType = urltoken"
     },
     {
       "name": "scannerMode",
