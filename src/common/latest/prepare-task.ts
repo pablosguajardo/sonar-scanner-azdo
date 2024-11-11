@@ -16,7 +16,11 @@ import Scanner, { ScannerMode } from "./sonarqube/Scanner";
 import TaskReport from "./sonarqube/TaskReport";
 
 export const prepareTask: TaskJob = async (endpointType: EndpointType) => {
-  const endpoint = Endpoint.getEndpoint(tl.getInput(endpointType, true) as string, endpointType);
+  const endpoint = Endpoint.getEndpoint(
+    tl.getInput(endpointType, true) as string,
+    endpointType,
+    tl.getInput("SonarQubeServerConnectionType", true),
+  );
   const rootPath = __dirname;
 
   const scannerMode = ScannerMode[tl.getInput("scannerMode", true)?.toLowerCase() as ScannerMode];

@@ -30,10 +30,10 @@
       "required": true,
       "helpMarkDown": "Select the type of SonarQube Server connection type.",
       "options": {
-        "serverendpoint": "SonarQube Server endpoint",
-        "urltoken": "Url + Token"
+        "ServerEndPoint": "SonarQube Server endpoint",
+        "UrlToken": "Url + Token"
       },
-      "defaultValue": "serverendpoint"
+      "defaultValue": "ServerEndPoint"
     },
     {
       "name": "SonarQube",
@@ -41,7 +41,7 @@
       "label": "SonarQube Server Endpoint",
       "required": true,
       "helpMarkDown": "Select the SonarQube server endpoint for your project. To create one, click the Manage link and create a new SonarQube Server Endpoint, enter your server url and token.",
-      "visibleRule": "SonarQubeServerConnectionType = serverendpoint"
+      "visibleRule": "SonarQubeServerConnectionType = ServerEndPoint"
     },
     {
       "defaultValue": "$(SonarQubeServerUrl)",
@@ -50,7 +50,7 @@
       "name": "SonarQubeServerUrl",
       "required": true,
       "type": "string",
-      "visibleRule": "SonarQubeServerConnectionType = urltoken"
+      "visibleRule": "SonarQubeServerConnectionType = UrlToken"
     },
     {
       "defaultValue": "$(SonarQubeServerToken)",
@@ -59,7 +59,7 @@
       "name": "SonarQubeServerToken",
       "required": true,
       "type": "string",
-      "visibleRule": "SonarQubeServerConnectionType = urltoken"
+      "visibleRule": "SonarQubeServerConnectionType = UrlToken"
     },
     {
       "name": "scannerMode",
