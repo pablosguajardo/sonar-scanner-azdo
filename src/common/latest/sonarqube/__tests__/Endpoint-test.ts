@@ -1,6 +1,6 @@
 import * as tl from "azure-pipelines-task-lib/task";
 import { PROP_NAMES } from "../../helpers/constants";
-import Endpoint, { EndpointType } from "../Endpoint";
+import Endpoint, { EndpointType, SonarQubeServerConnectionType } from "../Endpoint";
 
 beforeEach(() => {
   jest.restoreAllMocks();
@@ -29,7 +29,7 @@ it("On SonarCloud password is always null", () => {
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("");
   jest.spyOn(tl, "getInput").mockImplementation(() => "organization");
 
-  const result = Endpoint.getEndpoint("sonarcloud", EndpointType.SonarCloud);
+  const result = Endpoint.getEndpoint("sonarcloud", EndpointType.SonarCloud,SonarQubeServerConnectionType.ServerEndPoint);
 
   expect(result.toSonarProps("7.1.0")[PROP_NAMES.PASSSWORD]).toBeNull();
   expect(result.auth.password).toBe("");
@@ -43,7 +43,7 @@ it("On SonarQube password is empty should not be intepreted", () => {
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("username1243");
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("");
 
-  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube);
+  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube, SonarQubeServerConnectionType.ServerEndPoint);
 
   expect(result.toSonarProps("7.1.0")[PROP_NAMES.PASSSWORD]).toBeNull();
   expect(result.auth.password).toBe("");
@@ -56,7 +56,7 @@ it("On SonarQube password is not empty should be intepreted", () => {
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("username1243");
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("P@ssword");
 
-  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube);
+  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube, SonarQubeServerConnectionType.ServerEndPoint);
 
   expect(result.toSonarProps("7.1.0")[PROP_NAMES.PASSSWORD]).toEqual("P@ssword");
   expect(result.auth.password).toEqual("P@ssword");
@@ -69,7 +69,7 @@ it("For SonarQube version >= 10.0.0 token field is used instead of login", () =>
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("tokenvalue");
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("");
 
-  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube);
+  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube,SonarQubeServerConnectionType.ServerEndPoint);
   expect(result.toSonarProps("10.0.0")).not.toContain(PROP_NAMES.LOGIN);
 });
 
@@ -80,7 +80,7 @@ it("For SonarQube version < 10.0.0 login is used", () => {
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("tokenvalue");
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("");
 
-  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube);
+  const result = Endpoint.getEndpoint("sonarqube", EndpointType.SonarQube, SonarQubeServerConnectionType.ServerEndPoint);
   expect(result.toSonarProps("9.9.1")[PROP_NAMES.LOGIN]).toBe("tokenvalue");
 });
 
@@ -92,7 +92,7 @@ it("On SonarCloud token field is used instead of login", () => {
   jest.spyOn(tl, "getEndpointAuthorizationParameter").mockReturnValueOnce("");
   jest.spyOn(tl, "getInput").mockImplementation(() => "organization");
 
-  const result = Endpoint.getEndpoint("sonarcloud", EndpointType.SonarCloud);
+  const result = Endpoint.getEndpoint("sonarcloud", EndpointType.SonarCloud, SonarQubeServerConnectionType.ServerEndPoint);
 
   expect(result.toSonarProps("8.2.4")).not.toContain(PROP_NAMES.LOGIN);
 });

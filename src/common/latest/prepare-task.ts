@@ -11,7 +11,7 @@ import { log, LogLevel } from "./helpers/logging";
 import { getServerVersion } from "./helpers/request";
 import { stringifyScannerParams } from "./helpers/utils";
 import { TaskJob } from "./run";
-import Endpoint, { EndpointType } from "./sonarqube/Endpoint";
+import Endpoint, { EndpointType, SonarQubeServerConnectionType } from "./sonarqube/Endpoint";
 import Scanner, { ScannerMode } from "./sonarqube/Scanner";
 import TaskReport from "./sonarqube/TaskReport";
 
@@ -19,7 +19,7 @@ export const prepareTask: TaskJob = async (endpointType: EndpointType) => {
   const endpoint = Endpoint.getEndpoint(
     tl.getInput(endpointType, true) as string,
     endpointType,
-    tl.getInput("SonarQubeServerConnectionType", true),
+    tl.getInput("SonarQubeServerConnectionType", true) as SonarQubeServerConnectionType ,
   );
   const rootPath = __dirname;
 

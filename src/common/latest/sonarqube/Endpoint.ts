@@ -12,8 +12,8 @@ export enum EndpointType {
 }
 
 export enum SonarQubeServerConnectionType {
-  SonarCloud = "ServerEndPoint",
-  SonarQube = "UrlToken",
+  ServerEndPoint = "ServerEndPoint",
+  UrlToken = "UrlToken",
 }
 export interface EndpointData {
   url: string;
@@ -116,16 +116,16 @@ export default class Endpoint {
   ): Endpoint {
     let url: string;
     let token: string;
-    if (connectionType === SonarQubeServerConnectionType.SonarCloud) {
+    if (connectionType === SonarQubeServerConnectionType.ServerEndPoint) {
       url = tl.getEndpointUrl(id, false) as string;
       token = tl.getEndpointAuthorizationParameter(
         id,
         "apitoken",
         type !== EndpointType.SonarCloud,
-      );
+      ) as string;
     } else {
-      url = tl.getInput("SonarQubeServerUrl", true);
-      token = tl.getInput("SonarQubeServerToken", true);
+      url = tl.getInput("SonarQubeServerUrl", true) as string;
+      token = tl.getInput("SonarQubeServerToken", true) as string;
     }
     const username = tl.getEndpointAuthorizationParameter(id, "username", true);
     const password = tl.getEndpointAuthorizationParameter(id, "password", true);
